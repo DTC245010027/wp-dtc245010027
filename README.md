@@ -17,3 +17,10 @@ Website quảng bá sản phẩm bằng WordPress, triển khai bằng Docker Co
 - mysqld-exporter dùng tài khoản MySQL riêng `exporter` với quyền tối thiểu (mật khẩu trong `.env`, biến `EXPORTER_PASSWORD`).
 - Dashboard nạp tự động từ `grafana/dashboards/`.
 - Mạng: `db` (internal, không ra ngoài), `web`, `monitoring`.
+
+## Log tập trung (Loki + Promtail)
+- Promtail đọc log container qua Docker socket (chỉ đọc) và đẩy sang Loki.
+- Grafana có datasource Loki, truy vấn bằng LogQL (Explore, chọn Loki).
+- Truy vấn mẫu 1: {container="nginx"}
+- Truy vấn mẫu 2: {container="nginx"} |~ "\" (301|302|404) "
+- Truy vấn mẫu 3: sum by (service) (count_over_time({container=~".+"}[1m]))
