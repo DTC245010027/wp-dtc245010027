@@ -29,6 +29,7 @@ services:
         if (isset($$_SERVER['HTTP_X_FORWARDED_PROTO']) && $$_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') { $$_SERVER['HTTPS'] = 'on'; }
     volumes:
       - wordpress_data:/var/www/html
+      - ./wordpress/apache-hardening.conf:/etc/apache2/conf-enabled/zz-hardening.conf:ro
     networks:
       - db
       - web
